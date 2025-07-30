@@ -14,20 +14,29 @@ EXPECTED_BAKE_TIME = 40
 #TODO: Remove 'pass' and complete the 'bake_time_remaining()' function below.
 def bake_time_remaining(real_time):
     return EXPECTED_BAKE_TIME - real_time
+    
 
 
-def preparation_time_in_minutes():
-    pass
-#TODO: Define the 'preparation_time_in_minutes()' function below.
-# To avoid the use of magic numbers (see: https://en.wikipedia.org/wiki/Magic_number_(programming)), you should define a PREPARATION_TIME constant.
-# You can do that on the line below the 'EXPECTED_BAKE_TIME' constant.
-# This will make it easier to do calculations, and make changes to your code.
+def preparation_time_in_minutes(number_of_layers):
+    return number_of_layers * 2
+
 
 
 
 #TODO: define the 'elapsed_time_in_minutes()' function below.
-def elapsed_time_in_minutes():
-    ...
+def elapsed_time_in_minutes(number_of_layers, elapsed_bake_time):
+    prep_time = number_of_layers * 2
+    return prep_time + elapsed_bake_time
+    """Calculate the elapsed cooking time.
+
+    :param number_of_layers: int - the number of layers in the lasagna.
+    :param elapsed_bake_time: int - elapsed cooking time.
+    :return: int - total time elapsed (in minutes) preparing and cooking.
+
+    This function takes two integers representing the number of lasagna layers and the
+    time already spent baking and calculates the total elapsed minutes spent cooking the
+    lasagna.
+    """
 
 
 # TODO: Remember to go back and add docstrings to all your functions
