@@ -67,48 +67,48 @@ class BlackJackTest(unittest.TestCase):
 
                 self.assertEqual(value_of_ace(card_one, card_two), ace_value, msg=error_msg)
 
-    # @pytest.mark.task(taskno=4)
-    # def test_is_blackjack(self):
-    #     test_data = [(('A', 'K'), True), (('10', 'A'), True),
-    #                  (('10', '9'), False), (('A', 'A'), False),
-    #                  (('4', '7'), False), (('9', '2'), False),
-    #                  (('Q', 'K'), False)]
+    @pytest.mark.task(taskno=4)
+    def test_is_blackjack(self):
+        test_data = [(('A', 'K'), True), (('10', 'A'), True),
+                     (('10', '9'), False), (('A', 'A'), False),
+                     (('4', '7'), False), (('9', '2'), False),
+                     (('Q', 'K'), False)]
 
-    #     for variant, (hand, expected) in enumerate(test_data, 1):
-    #         with self.subTest(f'variation #{variant}', hand=hand, expected=expected):
-    #             actual_result = is_blackjack(*hand)
-    #             error_msg = (f'Called is_blackjack({hand[0]}, {hand[1]}). '
-    #                          f'The function returned {actual_result}, '             
-    #                          f'but hand {hand} {"is" if expected else "is not"} a blackjack.')
+        for variant, (hand, expected) in enumerate(test_data, 1):
+            with self.subTest(f'variation #{variant}', hand=hand, expected=expected):
+                actual_result = is_blackjack(*hand)
+                error_msg = (f'Called is_blackjack({hand[0]}, {hand[1]}). '
+                             f'The function returned {actual_result}, '             
+                             f'but hand {hand} {"is" if expected else "is not"} a blackjack.')
 
-    #             self.assertEqual(actual_result, expected, msg=error_msg)
+                self.assertEqual(actual_result, expected, msg=error_msg)
 
-    # @pytest.mark.task(taskno=5)
-    # def test_can_split_pairs(self):
-    #     test_data = [(('Q', 'K'), True), (('6', '6'), True),
-    #                  (('A', 'A'), True),(('10', 'A'), False),
-    #                  (('10', '9'), False)]
+    @pytest.mark.task(taskno=5)
+    def test_can_split_pairs(self):
+        test_data = [(('Q', 'K'), True), (('6', '6'), True),
+                     (('A', 'A'), True),(('10', 'A'), False),
+                     (('10', '9'), False)]
 
-    #     for variant, (hand, expected) in enumerate(test_data, 1):
-    #         with self.subTest(f'variation #{variant}', input=hand, expected=expected):
-    #             actual_result = can_split_pairs(*hand)
-    #             error_msg = (f'Called can_split_pairs({hand[0]}, {hand[1]}). '
-    #                          f'The function returned {actual_result}, '
-    #                          f'but hand {hand} {"can" if expected else "cannot"} be split into pairs.')
+        for variant, (hand, expected) in enumerate(test_data, 1):
+            with self.subTest(f'variation #{variant}', input=hand, expected=expected):
+                actual_result = can_split_pairs(*hand)
+                error_msg = (f'Called can_split_pairs({hand[0]}, {hand[1]}). '
+                             f'The function returned {actual_result}, '
+                             f'but hand {hand} {"can" if expected else "cannot"} be split into pairs.')
 
-    #             self.assertEqual(actual_result, expected, msg=error_msg)
+                self.assertEqual(actual_result, expected, msg=error_msg)
 
-    # @pytest.mark.task(taskno=6)
-    # def test_can_double_down(self):
-    #     test_data = [(('A', '9'), True), (('K', 'A'), True),
-    #                  (('4', '5'), True),(('A', 'A'), False),
-    #                  (('10', '2'), False), (('10', '9'), False)]
+    @pytest.mark.task(taskno=6)
+    def test_can_double_down(self):
+        test_data = [(('A', '9'), True), (('K', 'A'), True),
+                     (('4', '5'), True),(('A', 'A'), False),
+                     (('10', '2'), False), (('10', '9'), False)]
 
-    #     for variant, (hand, expected) in enumerate(test_data, 1):
-    #         with self.subTest(f'variation #{variant}', hand=hand, expected=expected):
-    #             actual_result = can_double_down(*hand)
-    #             error_msg = (f'Called can_double_down({hand[0]}, {hand[1]}). '
-    #                          f'The function returned {actual_result}, '
-    #                          f'but hand {hand} {"can" if expected else "cannot"} be doubled down.')
+        for variant, (hand, expected) in enumerate(test_data, 1):
+            with self.subTest(f'variation #{variant}', hand=hand, expected=expected):
+                actual_result = can_double_down(*hand)
+                error_msg = (f'Called can_double_down({hand[0]}, {hand[1]}). '
+                             f'The function returned {actual_result}, '
+                             f'but hand {hand} {"can" if expected else "cannot"} be doubled down.')
 
-    #             self.assertEqual(actual_result, expected, msg=error_msg)
+                self.assertEqual(actual_result, expected, msg=error_msg)

@@ -86,8 +86,14 @@ def is_blackjack(card_one, card_two):
     2.  'A' (ace card) = 11 (if already in hand)
     3.  '2' - '10' = numerical value.
     """
-
-    pass
+    res=False
+    jqk = ('10', 'J', 'Q', 'K')
+    if card_one == 'A' and card_two == 'A':
+        res = False
+    elif (card_one == 'A' and card_two in jqk) or (card_one in jqk and card_two in 'A'):
+        res = True
+    
+    return res
 
 
 def can_split_pairs(card_one, card_two):
@@ -97,7 +103,11 @@ def can_split_pairs(card_one, card_two):
     :return: bool - can the hand be split into two pairs? (i.e. cards are of the same value).
     """
 
-    pass
+    jqk = ('J', 'Q', 'K')
+    one = 10 if card_one in jqk else (11 if card_one == 'A' else int(card_one))
+    two = 10 if card_two in jqk else (11 if card_two == 'A' else int(card_two))
+    
+    return one == two
 
 
 def can_double_down(card_one, card_two):
@@ -107,7 +117,10 @@ def can_double_down(card_one, card_two):
     :return: bool - can the hand can be doubled down? (i.e. totals 9, 10 or 11 points).
     """
 
-    pass
+    jqk = ('J', 'Q', 'K')
+    one = 10 if card_one in jqk else (1 if card_one == 'A' else int(card_one))
+    two = 10 if card_two in jqk else (1 if card_two == 'A' else int(card_two))
 
+    return 8 < one + two <= 11
 
-print(value_of_ace('Q', 'A'))
+print(is_blackjack('10', 'A'))
