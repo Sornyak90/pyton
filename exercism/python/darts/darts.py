@@ -17,8 +17,3 @@ def score(x, y):
         res = 0
     return res
 
-
-    
-
-
-print(score(-0.1, -0.1))
