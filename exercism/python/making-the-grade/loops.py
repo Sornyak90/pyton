@@ -6,22 +6,22 @@ def round_scores(student_scores):
 
 
 def count_failed_students(student_scores):
-    return sum(1 for x in student_scores if x <= 40)
+    return sum(1 for bal in student_scores if bal <= 40)
     
 
 
 def above_threshold(student_scores, threshold):
-    return [x for x in student_scores if x >= threshold]
+    return [bal for bal in student_scores if bal >= threshold]
 
 
 def letter_grades(highest):
-    a = 41
-    b = int((highest - 40) / 4)
-    return [a + i*b for i in range(4)]
+    left = 41
+    right = int((highest - 40) / 4)
+    return [left + num*right for num in range(4)]
 
 
 def student_ranking(student_scores, student_names):
-    return [f"{i+1}. {student_names[i]}: {student_scores[i]}" for i in range(len(student_scores))] 
+    return [f"{num+1}. {student_names[num]}: {student_scores[num]}" for num in range(len(student_scores))] 
 
 
 def perfect_score(student_info):

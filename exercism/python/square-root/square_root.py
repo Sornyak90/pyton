@@ -8,6 +8,4 @@ def square_root(number):
         x2= round(abs(x1 -x0),3)
         x0=x1
         
-    return int(x1)
-             
-print(square_root(25))  
+    return int(x1) 

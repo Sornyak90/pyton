@@ -30,4 +30,3 @@ def resistor_label(colors):
 
     return resist
 
-print(resistor_label(["blue", "grey", "white", "brown", "brown"]))

@@ -39,6 +39,3 @@ def label(colors):
         resist = '0 ohms'
 
     return resist
-
-
-print(label(["black", "black", "black"]))
