@@ -16,8 +16,3 @@ def value(colors):
         del colors[0]
         n=1
     return int(''.join(str(code.index(colors[i])) for i in range(n)))
-
-
-
-
-print(value(["green", "brown", "orange"]))
