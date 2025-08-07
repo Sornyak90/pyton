@@ -18,7 +18,7 @@ def encode(plain_text):
         ecod.insert(inx, " ")
         inx+=6
         
-    return ''.join(i for i in ecod)
+    return ''.join(i for i in ecod).strip()
 
 
 
@@ -31,7 +31,6 @@ def decode(ciphered_text):
             dcod+=plain[c_inx]
         else:
             dcod+=alnum
-
-    return dcod
-
+    
+    return dcod.rstrip()
 print(decode("gvhgr mt123 gvhgr mt"))
