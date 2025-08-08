@@ -1,37 +1,28 @@
 def annotate(garden):
-    # Function body starts here
-    if len(set(len(s) for s in garden)) > 2:
+    if not garden:
+        return garden
+    
+    # Validate board dimensions
+    if len({len(row) for row in garden}) > 1:
+        raise ValueError("The board is invalid with current input.")
+    
+    # Validate board characters
+    if {char for row in garden for char in row} - {' ', '*'}:
         raise ValueError("The board is invalid with current input.")
 
-    if len(set(s for row in garden for s in row)) > 2:
-        raise ValueError("The board is invalid with current input.")
+    garden = [list(row) for row in garden]
+    rows, cols = len(garden), len(garden[0])
 
-    if len(garden) != 0 and len(garden[0]) != 0:
-        max_i = len(garden)
-        max_j = len(garden[0])
+    for i in range(rows):
+        for j in range(cols):
+            if garden[i][j] == '*':
+                # Check all 8 surrounding cells
+                for di in (-1, 0, 1):
+                    for dj in (-1, 0, 1):
+                        if di == dj == 0:
+                            continue
+                        x, y = i + di, j + dj
+                        if 0 <= x < rows and 0 <= y < cols and garden[x][y] != '*':
+                            garden[x][y] = '1' if garden[x][y] == ' ' else str(int(garden[x][y]) + 1)
 
-        garden = [list(i) for i in garden]
-
-        for i in range(max_i):
-            for j in range(max_j):
-                if garden[i][j] == "*":
-                    for g in range(-1, 2):
-                        for h in range(-1, 2):
-                            x = i + g
-                            y = j + h
-                            if (0 <= x < max_i) and (0 <= y < max_j):
-                                if garden[x][y] != "*":
-                                    if garden[x][y] == " ":
-                                        garden[x][y] = "1"
-                                    else:
-                                        num = int(garden[x][y])
-                                        num += 1
-                                        garden[x][y] = str(num)
-                            else:
-                                continue
-
-        result = ["".join(row) for row in garden]
-    else:
-        result = garden
-
-    return result
+    return [''.join(row) for row in garden]
