@@ -1,53 +1,39 @@
 def answer(question):
-    znaki = ('+', '-', '*', '/')
-    replacements = {
-        "plus": '+',
-        "minus": '-',
-        "multiplied by": '*',
-        "divided by": '/'
+    operations = {
+        "plus": "+",
+        "minus": "-",
+        "multiplied by": "*",
+        "divided by": "/"
     }
 
-    question_lower = question.lower()
-    if any(word in question_lower for word in ["cube", "squared", "power", "root"]) \
-            and not any(op in question_lower for op in replacements.keys()):
+    if any(word in question.lower() for word in ["cube", "squared", "power", "root"]) \
+       and not any(op in question.lower() for op in operations):
         raise ValueError("unknown operation")
 
-    matem = question
-    for old, new in replacements.items():
-        matem = matem.replace(old, new)
+    expr = question
+    for word, op in operations.items():
+        expr = expr.replace(word, op)
 
-    matem1 = ''.join(matem[i] for i in range(len(matem)) if matem[i].isdigit() or matem[i] in znaki or matem[i] == ' ')
-    matem = matem1.strip()
+    expr = ''.join(c for c in expr if c.isdigit() or c in '+-*/ ').strip()
 
-    if not matem:
+    if not expr:
         raise ValueError("syntax error")
 
-    matem = matem.split()
+    tokens = expr.split()
 
-    if len(matem) % 2 == 0:
-        raise ValueError("syntax error")  
-
-    if not matem[0].lstrip('-').isdigit() or not matem[-1].lstrip('-').isdigit():
+    if (len(tokens) % 2 != 1
+        or not tokens[0].lstrip('-').isdigit()
+        or not tokens[-1].lstrip('-').isdigit()
+        or any(tokens[i] not in '+-*/' for i in range(1, len(tokens)-1, 2))
+        or any(not tokens[i].lstrip('-').isdigit() for i in range(2, len(tokens), 2))
+    ):
         raise ValueError("syntax error")
 
-    for i in range(1, len(matem) - 1, 2):
-        if matem[i] not in znaki:
-            raise ValueError("syntax error")
-        if not matem[i+1].lstrip('-').isdigit():
-            raise ValueError("syntax error")
-
-    if len(matem) > 3:
-        matem.insert(0, '(')
-        matem.insert(4, ')')
-
-    matem_new = ''.join(matem)
-
-    if any(c not in '0123456789+-*/(). ' for c in matem_new):
-        raise ValueError("syntax error")
+    if len(tokens) > 3:
+        tokens.insert(0, '(')
+        tokens.insert(4, ')')
 
     try:
-        result = eval(matem_new)
+        return eval(''.join(tokens))
     except:
         raise ValueError("syntax error")
-
-    return result
