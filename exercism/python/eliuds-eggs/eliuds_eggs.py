@@ -9,4 +9,4 @@ def egg_count(display_value):
         display_value = decimal
     else:
         binary.insert(0, decimal)
-    return binary.count(1)cd
+    return binary.count(1)
