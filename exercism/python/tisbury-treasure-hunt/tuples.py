@@ -15,7 +15,7 @@ def create_record(azara_record, rui_record):
     if tuple(azara_record[1]) == rui_record[1]:
         res = azara_record + rui_record
     else:
-        res = "not a match"
+        res = 'not a match'
 
     return res
 
