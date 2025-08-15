@@ -1,65 +1,46 @@
 def tally(rows):
+    if not rows:
+        return ["Team                           | MP |  W |  D |  L |  P"]
     
-    table = [
-            "Team                           | MP |  W |  D |  L |  P"
-    ]
-    name = []
-    player_result = [0]*5
     table_result = {}
-
-    if rows == []:
-        return table
-
-    for i in range(len(rows)):
-        line = rows[i].split(";")
-        line.pop()
-        name+=line
-        names = set(name)
-
-    for name in names:
-        table_result[name] = player_result.copy()
     
-    for i in range(len(rows)):
-        line = rows[i].split(";")
-        if line[2] == "win":
-            table_result[line[0]][0]+=1
-            table_result[line[0]][1]+=1
-            table_result[line[0]][4]+=3
-            table_result[line[1]][0]+=1
-            table_result[line[1]][3]+=1
-        elif line[2] == "loss":
-            table_result[line[1]][0]+=1
-            table_result[line[1]][1]+=1
-            table_result[line[1]][4]+=3
-            table_result[line[0]][0]+=1
-            table_result[line[0]][3]+=1
-        else:
-            table_result[line[0]][0]+=1
-            table_result[line[1]][0]+=1
-            table_result[line[0]][2]+=1
-            table_result[line[1]][2]+=1
-            table_result[line[0]][4]+=1
-            table_result[line[1]][4]+=1
+    for row in rows:
+        team1, team2, result = row.split(';')
+        
+        # Initialize teams if not present
+        for team in (team1, team2):
+            if team not in table_result:
+                table_result[team] = [0, 0, 0, 0, 0]  # MP, W, D, L, P
+        
+        # Update stats based on match result
+        table_result[team1][0] += 1  # MP
+        table_result[team2][0] += 1  # MP
+        
+        if result == "win":
+            table_result[team1][1] += 1  # W
+            table_result[team1][4] += 3  # P
+            table_result[team2][3] += 1  # L
+        elif result == "loss":
+            table_result[team2][1] += 1  # W
+            table_result[team2][4] += 3  # P
+            table_result[team1][3] += 1  # L
+        else:  # draw
+            table_result[team1][2] += 1  # D
+            table_result[team2][2] += 1  # D
+            table_result[team1][4] += 1  # P
+            table_result[team2][4] += 1  # P
     
-
-    #спиздил код 
-    sorted_table = sorted(table_result.items(), key=lambda x: (-x[1][4], x[0]))
-    ######
-
-
-    for item in sorted_table:
-        item_list = list(item)
-        table.append(
-            item_list[0] + " " * (30 - len(item_list[0])) +
-            f" | {' ' if int(item[1][0]) < 10 else ''}{item[1][0]} | " +
-            f"{' ' if int(item[1][1]) < 10 else ''}{item[1][1]} | " +
-            f"{' ' if int(item[1][2]) < 10 else ''}{item[1][2]} | " +
-            f"{' ' if int(item[1][3]) < 10 else ''}{item[1][3]} | " +
-            f"{' ' if int(item[1][4]) < 10 else ''}{item[1][4]}"
-)
-                                                                                                                                   
+    # Sort by points descending, then by team name ascending
+    sorted_teams = sorted(table_result.items(), key=lambda x: (-x[1][4], x[0]))
+    
+    # Build the result table
+    table = ["Team                           | MP |  W |  D |  L |  P"]
+    for team, stats in sorted_teams:
+        team_line = (
+            f"{team.ljust(31)}| {str(stats[0]).rjust(2)} | "
+            f"{str(stats[1]).rjust(2)} | {str(stats[2]).rjust(2)} | "
+            f"{str(stats[3]).rjust(2)} | {str(stats[4]).rjust(2)}"
+        )
+        table.append(team_line)
+    
     return table
-
-table = []
-            
-print(tally(table))
