@@ -1,10 +1,18 @@
-def triplets_with_sum(number):
-    a = b = 0
-    c = number
+def triplets_with_sum(N):
     result = []
-    for a in range(1, number + 1):
-        for b in range(a, number + 1):
-            c = number - a - b
-            if a < b < c and a**2 + b**2 == c**2:
+    
+    # Внешний цикл перебирает возможные значения 'a'
+    for a in range(1, N // 3 + 1):
+        
+        # Внутренний цикл начинается сразу после 'a' и идёт до N//2 включительно,
+        # потому что сумма a + b должна быть меньше N/2
+        for b in range(a+1, min((N-a)//2 + 1, int((N*N - 2*a*N)**0.5)+1)):
+            
+            # Вычисляем третье число C исходя из суммы
+            c = N - a - b
+            
+            # Проверяем Пифагорову тройку
+            if a * a + b * b == c * c:
                 result.append([a, b, c])
+                
     return result

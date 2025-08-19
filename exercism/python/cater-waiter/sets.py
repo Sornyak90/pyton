@@ -13,29 +13,25 @@ from sets_categories_data import (VEGAN,
 def clean_ingredients(dish_name, dish_ingredients):
     return (dish_name, set(dish_ingredients))
 
-
 def check_drinks(drink_name, drink_ingredients):
     for drink in drink_ingredients:
         if drink in ALCOHOLS:
-            return drink_name + " Cocktail"
-        
-    return  drink_name + " Mocktail"
+            return f"{drink_name} Cocktail"
+    return  f"{drink_name} Mocktail"
     
-
-
 def categorize_dish(dish_name, dish_ingredients):
+    """dfDFD"""
     if dish_ingredients.issubset(VEGAN):
         return f"{dish_name}: VEGAN"
-    elif dish_ingredients.issubset(VEGETARIAN):
+    if dish_ingredients.issubset(VEGETARIAN):
         return f"{dish_name}: VEGETARIAN"
-    elif dish_ingredients.issubset(KETO):
+    if dish_ingredients.issubset(KETO):
         return f"{dish_name}: KETO"
-    elif dish_ingredients.issubset(PALEO):
+    if dish_ingredients.issubset(PALEO):
         return f"{dish_name}: PALEO"
-    elif dish_ingredients.issubset(OMNIVORE):
+    if dish_ingredients.issubset(OMNIVORE):
         return f"{dish_name}: OMNIVORE"
     return None
-
 
 def tag_special_ingredients(dish):
     name, ingredient = dish
@@ -53,8 +49,6 @@ def compile_ingredients(dishes):
 
     return list_ingr
     
-
-
 def separate_appetizers(dishes, appetizers):
     res = set()
     for dishe in dishes:
@@ -62,10 +56,7 @@ def separate_appetizers(dishes, appetizers):
             res.add(dishe)
     return list(res)
 
-
 def singleton_ingredients(dishes, intersection):
     all_ingr = set().union(*dishes)
     res = all_ingr - intersection
     return res
-
-print(tag_special_ingredients(('Ginger Glazed Tofu Cutlets', ['tofu', 'soy sauce', 'ginger', 'corn starch', 'garlic', 'brown sugar', 'sesame seeds', 'lemon juice'])))
