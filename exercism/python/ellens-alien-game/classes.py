@@ -31,10 +31,5 @@ def new_aliens_collection(positions):
     return aliens
 
 
-# alien_start_positions = [(4, 7), (-1, 0)]
-# aliens = new_aliens_collection(alien_start_positions)
-
-# for alien in aliens:
-#     print(alien.x_coordinate, alien.y_coordinate)
 
 
