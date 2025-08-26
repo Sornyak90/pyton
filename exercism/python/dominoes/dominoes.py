@@ -1,78 +1,75 @@
-from collections import defaultdict, deque
-
-
-def dfs(graph, start, path):
-    stack = [start]
-    while stack:
-        current_vertex = stack[-1]
-        if graph[current_vertex]:
-            next_vertex = graph[current_vertex].pop()
-            stack.append(next_vertex)
-        else:
-            path.append(stack.pop())
-
-
-def find_eulerian_path_or_cycle(edges):
-    degrees = defaultdict(int)
-    graph = defaultdict(list)
-    
-    # Построение графа и подсчёт степеней вершин
-    for u, v in edges:
-        graph[u].append(v)
-        degrees[u] += 1
-        degrees[v] -= 1
-        
-    # Поиск стартовой вершины
-    odd_degree_vertices = [v for v, d in degrees.items() if abs(d) > 0]
-    if len(odd_degree_vertices) > 2:
-        return None
-    elif len(odd_degree_vertices) == 2:
-        start_vertex = odd_degree_vertices[0]
-    else:
-        start_vertex = min(degrees.keys())  # Можно начать с любого узла, если цикл замкнутый
-    
-    # DFS для нахождения Эйлерова пути/цикла
-    path = []
-    dfs(graph, start_vertex, path)
-    
-    # Возвращаем обратный порядок пути
-    return path[::-1]
-
-
+from copy import deepcopy
 def can_chain(dominoes):
-    if not dominoes:
+    if len(dominoes) == 0:
         return []
     
-    # Преобразование костяшек домино в рёбра графа
-    edges = [(u, v) for u, v in dominoes]
-    
-    eulerian_path = find_eulerian_path_or_cycle(edges)
-    if eulerian_path is None:
-        return None
-    
-    # Формируем итоговую последовательность домино
-    result = []
-    prev_vertex = None
-    for vertex in eulerian_path[:-1]:  # Исключаем последнюю вершину
-        if prev_vertex is not None:
-            matching_domino = next((d for d in dominoes if sorted([prev_vertex, vertex]) == sorted(d)), None)
-            if matching_domino is None:
-                return None
+    i = 0
+    while i < len(dominoes):
+        if dominoes[i][0] == dominoes[i][1]:
+            # Проверяем, есть ли другие вхождения этого числа
+            count = 0
+            for d in dominoes:
+                if d[0] == dominoes[i][0] or d[1] == dominoes[i][0]:
+                    count += 1
+                    if count > 1: 
+                        break
             
-            # Ориентируем костяшку правильно
-            if matching_domino[0] == prev_vertex:
-                result.append(matching_domino)
-            else:
-                result.append((matching_domino[1], matching_domino[0]))
+            if count > 1:
+                del dominoes[i]
+                continue 
+        i += 1
+                
+    domino_set = set(domino[i] for domino in dominoes for i in range(len(domino)))
+    domino = [[] for i in range(len(domino_set))]
+    for _domino in dominoes:
+        domino[_domino[0]-1].append(_domino[1])
+        domino[_domino[1]-1].append(_domino[0])
+
+    for d in domino:
+        if len(d)%2 != 0:
+            return None
+
+    domino_copy = deepcopy(domino)
+    result = []
+    j=0
+    status = False
+    check = check_clean(domino_copy)
+    for i in range(len(domino_copy)):
         
-        prev_vertex = vertex
+        while check:
+            if len(domino_copy[i])== 0:
+                break
+            result.append((i+1,domino_copy[i][j]))
+            _j=domino_copy[i][j]
+            del domino_copy[i][j]
+            inx = domino_copy[_j-1].index(i+1)
+            if inx == -1:
+                result = False
+                status = True
+                break
+            del domino_copy[_j-1][inx]
+            i=_j-1
+            j=0
+        if status:
+            break
+        check = check_clean(domino_copy)
+        if result[0][0] == result[-1][-1] and not check:
+            return result
+        j=0
+        domino_copy = deepcopy(domino)
+        result = []
+       
+    return None
+
+def check_clean(array):
+    for row in array:
+        if len(row) != 0:
+            return True
+    return False
     
-    return result
+    
 
 
-# Тестовые случаи
-if __name__ == "__main__":
-    print(can_chain([]))                      # Должно вернуть пустой список
-    print(can_chain([(1, 1)]))               # Должно вернуть [(1, 1)]
-    print(can_chain([(1, 2)]))               # Нет правильного решения
-    print(can_chain([(1, 2), (3, 1), (2, 3)])) # Должно вернуть одну из возможных правильных последовательностей
+input_dominoes = [(1, 2), (2, 3), (3, 1), (1, 1), (2, 2), (3, 3)]
+
+print(can_chain(input_dominoes))
