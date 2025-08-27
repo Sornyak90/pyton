@@ -44,14 +44,3 @@ class PhoneNumber:
 
     def pretty(self):
         return f"({self.number[:3]})-{self.number[3:6]}-{self.number[6:]}"
-    
-       
-
-       
-
-
-        
-
-
-numberee = PhoneNumber("2234567890")
-print(numberee.pretty())

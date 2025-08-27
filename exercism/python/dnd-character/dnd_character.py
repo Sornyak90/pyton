@@ -56,10 +56,6 @@ def modifier(value):
 
 
 
-a = Character()
-print(a.strength)
-
-
 
 
 

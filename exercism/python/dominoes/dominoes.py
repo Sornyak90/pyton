@@ -66,10 +66,4 @@ def check_clean(array):
         if len(row) != 0:
             return True
     return False
-    
-    
 
-
-input_dominoes = [(1, 2), (2, 3), (3, 1), (1, 1), (2, 2), (3, 3)]
-
-print(can_chain(input_dominoes))
