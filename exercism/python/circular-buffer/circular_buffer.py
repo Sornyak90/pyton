@@ -80,15 +80,3 @@ class CircularBuffer:
     def clear(self):
         for i in self.buf:
             i.clear()
-
-
-buf = CircularBuffer(3)
-buf.write("1")
-buf.write("2")
-# buf.write("3")
-print(buf.read())
-buf.write("3")
-# buf.overwrite("5")
-print(buf.read())
-print(buf.read())
-#print(buf.read())
